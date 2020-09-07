@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary
+  labels:
+    app: canary
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 8082
+  selector:
+    app: canary
+    tier: frontend
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: canary
+  labels:
+    app: canary
+spec:
+  template:
+    metadata:
+      labels:
+        app: canary
+        tier: frontend
+    spec:
+      containers:
+      - image: aaneci/canary:v1.1.1
+        name: canary
+        command: ["app"]
+        ports:
+        - containerPort: 8082
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: canary
+  name: canary
+  namespace: default
+spec:
+  backend:
+    serviceName: canary
+    servicePort: 8082
