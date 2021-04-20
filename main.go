@@ -20,7 +20,7 @@ const (
 
 func main() {
 	var (
-		listenFlag = flag.String("listen", EnvOrDefault("CANARY_LISTEN", ":8082"), "Address + Port to listen on. Format ip:port. Environment variable: CANARY_LISTEN")
+		listenFlag = flag.String("listen", EnvOrDefault("CANARY_LISTEN", ":8080"), "Address + Port to listen on. Format ip:port. Environment variable: CANARY_LISTEN")
 	)
 	flag.Parse()
 
